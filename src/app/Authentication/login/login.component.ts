@@ -9,9 +9,9 @@ import {  FormBuilder, type FormGroup, ReactiveFormsModule, Validators } from "@
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  loginForm: FormGroup
-  submitted = false
-  showPassword = false
+  loginForm: FormGroup;
+  submitted = false;
+  showPassword = false;
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({

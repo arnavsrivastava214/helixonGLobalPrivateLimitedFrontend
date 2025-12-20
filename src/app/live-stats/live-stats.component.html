@@ -1,0 +1,62 @@
+<section class="live-stats-section" aria-label="Marketing Performance Statistics">
+    <div class="container">
+      <div class="section-header" [class.visible]="hasAnimated">
+        <h2 class="section-title">Real-Time Performance Metrics</h2>
+        <p class="section-subtitle">Track your digital marketing success with our live dashboard</p>
+      </div>
+      
+      <div class="stats-grid">
+        <div 
+          *ngFor="let stat of stats; let i = index" 
+          class="stat-card"
+          [class.visible]="hasAnimated"
+          [style.animation-delay]="(i * 100) + 'ms'"
+        >
+          <div class="stat-icon" [style.background]="'radial-gradient(circle at 30% 30%, ' + stat.color + '40, transparent 70%)'">
+            <span class="icon" [style.color]="stat.color">{{ stat.icon }}</span>
+          </div>
+          
+          <div class="stat-content">
+            <div class="stat-value">
+              <span class="prefix">{{ stat.prefix }}</span>
+              <span class="number" [style.color]="stat.color">
+                {{ formatNumber(animatedValues[i]) }}
+              </span>
+              <span class="suffix">{{ stat.suffix }}</span>
+            </div>
+            
+            <h3 class="stat-title">{{ stat.title }}</h3>
+            <p class="stat-description">{{ stat.description }}</p>
+            
+            <div class="stat-progress">
+              <div 
+                class="progress-bar"
+                [style.background]="'linear-gradient(90deg, ' + stat.color + '20, ' + stat.color + '50)'"
+              >
+                <div 
+                  class="progress-fill" 
+                  [style.background]="'linear-gradient(90deg, ' + stat.color + ', ' + stat.color + 'cc)'"
+                  [style.width.%]="(animatedValues[i] / stat.value) * 100"
+                  [style.transition-delay]="(i * 100 + stat.duration * 0.8) + 'ms'"
+                ></div>
+              </div>
+              <div class="progress-text">
+                <span>Live Update</span>
+                <span>{{ ((animatedValues[i] / stat.value) * 100).toFixed(0) }}%</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-glow" [style.background]="'radial-gradient(circle at center, ' + stat.color + '15, transparent 70%)'"></div>
+        </div>
+      </div>
+      
+      <div class="dashboard-footer" [class.visible]="hasAnimated">
+        <div class="update-indicator">
+          <div class="indicator-dot"></div>
+          <span class="indicator-text">Live data updating in real-time</span>
+        </div>
+        <p class="update-time">Last updated: {{ getCurrentTime() }}</p>
+      </div>
+    </div>
+  </section>

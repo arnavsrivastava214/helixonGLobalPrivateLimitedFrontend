@@ -1,0 +1,110 @@
+<!-- services-section.component.html -->
+<section class="services-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="header-badge">Data-Driven Results</div>
+        <h1 class="section-title">Growth Acceleration Modules</h1>
+        <p class="section-description">
+          We engineer measurable growth through specialized marketing systems that deliver quantifiable impact.
+        </p>
+        <div class="metrics-overview">
+          <div class="metric-pill">
+            <span class="metric-value">+42%</span>
+            <span class="metric-label">Avg. ROI Increase</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-value">3.8x</span>
+            <span class="metric-label">Faster Growth</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="services-grid">
+        <div 
+          *ngFor="let service of services; let i = index" 
+          class="service-module"
+          [class.active]="activeServiceIndex === i"
+          [class.featured]="service.featured"
+          [attr.data-category]="service.category"
+        >
+          <!-- Module Header with Icon -->
+          <div class="module-header">
+            <div class="icon-wrapper" [style.background]="service.gradient">
+              <span class="module-icon">{{service.icon}}</span>
+            </div>
+            <div class="module-badge" [style.background]="service.color + '22'">
+              <span class="badge-text">{{service.category}}</span>
+            </div>
+          </div>
+  
+          <!-- Module Content -->
+          <div class="module-content">
+            <h3 class="module-title">{{service.title}}</h3>
+            <p class="module-description">{{service.description}}</p>
+            
+            <!-- Key Metric -->
+            <div class="metric-display">
+              <div class="metric-header">
+                <span class="metric-label">Key Impact Metric</span>
+                <span class="metric-trend" [class.positive]="service.trend === 'up'">
+                  {{service.trend === 'up' ? '↗' : '→'}}
+                </span>
+              </div>
+              <div class="metric-value-wrapper">
+                <span class="metric-value">{{service.metricValue}}</span>
+                <span class="metric-unit">{{service.metricUnit}}</span>
+              </div>
+              <div class="metric-progress">
+                <div 
+                  class="progress-track" 
+                  [style.background]="service.color + '33'"
+                >
+                  <div 
+                    class="progress-fill" 
+                    [style.width.%]="service.metricPercent"
+                    [style.background]="service.gradient"
+                    [style.animation-delay.ms]="i * 100"
+                  ></div>
+                  <div class="progress-indicator" [style.left.%]="service.metricPercent">
+                    <div class="indicator-dot"></div>
+                  </div>
+                </div>
+                <span class="progress-label">Performance Index</span>
+              </div>
+            </div>
+  
+            <!-- Module Features -->
+            <ul class="module-features">
+              <li *ngFor="let feature of service.features">
+                <span class="feature-icon">✓</span>
+                <span class="feature-text">{{feature}}</span>
+              </li>
+            </ul>
+          </div>
+  
+          <!-- Module Footer with CTA -->
+          <div class="module-footer">
+            <button class="module-cta" [style.color]="service.color">
+              <span>Explore Module</span>
+              <svg class="cta-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="impact-tag" [style.background]="service.color + '22'">
+              <span class="impact-text" [style.color]="service.color">{{service.impact}}</span>
+            </div>
+          </div>
+  
+          <!-- Hover Glow Effect -->
+          <div class="module-glow" [style.background]="service.gradient"></div>
+        </div>
+      </div>
+  
+      <!-- Section Footer -->
+      <div class="section-footer">
+        <p class="footnote">
+          *All metrics based on 12-month average across 150+ client campaigns. Results may vary based on industry and market conditions.
+        </p>
+      </div>
+    </div>
+  </section>

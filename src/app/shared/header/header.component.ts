@@ -1,19 +1,26 @@
-import { Component, HostListener, type OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, type OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
 
-interface NavLink {
-  id: string;
-  title: string;
-  href: string;
-  description: string;
-  icon: string;
-  category: string;
-}
 interface MenuItem {
-  label: string;
-  link?: string;
-  children?: NavLink[];
+  label: string
+  id: string
+  icon: string
+  columns: MenuColumn[]
+}
+
+interface MenuColumn {
+  title: string
+  icon: string
+  image: string
+  links: MenuLink[]
+}
+
+interface MenuLink {
+  name: string
+  url: string
+  description: string
+  icon: string
 }
 @Component({
   selector: 'app-header',
@@ -22,465 +29,236 @@ interface MenuItem {
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  isMenuOpen = false;
-  activeDropdown: string | null = null;
-  isMobile = false;
-  navLinksCache: NavLink[] = [];
-  categorizedLinksCache: { category: string; links: NavLink[] }[] = [];
+  @ViewChild("magneticLogo") magneticLogo?: ElementRef
+
+  activeDropdown: string | null = null
+  mobileMenuOpen = false
+  scrolled = false
+  mouseX = 0
+  mouseY = 0
+  logoTransform = { x: 0, y: 0 }
 
   menuItems: MenuItem[] = [
     {
-      label: 'Product & Solutions',
-      children: this.getNavLinks(),
+      label: "Services",
+      id: "services",
+      icon: "🚀",
+      columns: [
+        {
+          title: "SEO & Content",
+          icon: "📊",
+          image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+          links: [
+            { name: "SEO Optimization", url: "/seo", description: "Rank higher on search engines", icon: "🔍" },
+            { name: "Content Marketing", url: "/content", description: "Engaging content that converts", icon: "✍️" },
+            { name: "Keyword Research", url: "/keywords", description: "Find profitable keywords", icon: "🎯" },
+            { name: "Link Building", url: "/link-building", description: "Quality backlinks", icon: "🔗" },
+            { name: "Local SEO", url: "/local-seo", description: "Dominate local search", icon: "📍" },
+            { name: "Technical SEO", url: "/technical-seo", description: "Optimize site structure", icon: "⚙️" },
+          ],
+        },
+        {
+          title: "Paid Advertising",
+          icon: "💰",
+          image: "https://images.unsplash.com/photo-1557838923-2985c318be48?w=400&h=300&fit=crop",
+          links: [
+            { name: "Google Ads", url: "/google-ads", description: "Reach customers on Google", icon: "🎯" },
+            { name: "Facebook Ads", url: "/facebook-ads", description: "Social advertising", icon: "👥" },
+            { name: "Instagram Ads", url: "/instagram-ads", description: "Visual storytelling", icon: "📸" },
+            { name: "LinkedIn Ads", url: "/linkedin-ads", description: "B2B lead generation", icon: "💼" },
+            { name: "TikTok Ads", url: "/tiktok-ads", description: "Viral video campaigns", icon: "🎬" },
+            { name: "YouTube Ads", url: "/youtube-ads", description: "Video advertising", icon: "▶️" },
+          ],
+        },
+        {
+          title: "Social Media",
+          icon: "📱",
+          image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop",
+          links: [
+            { name: "Social Strategy", url: "/social-strategy", description: "Comprehensive planning", icon: "🎲" },
+            { name: "Community Management", url: "/community", description: "Build loyal followers", icon: "👨‍👩‍👧‍👦" },
+            { name: "Influencer Marketing", url: "/influencer", description: "Partner with creators", icon: "⭐" },
+            { name: "Social Analytics", url: "/social-analytics", description: "Track performance", icon: "📈" },
+            { name: "Content Creation", url: "/content-creation", description: "Professional media", icon: "🎨" },
+            { name: "Brand Management", url: "/brand", description: "Protect reputation", icon: "🛡️" },
+          ],
+        },
+        {
+          title: "Email & CRM",
+          icon: "📧",
+          image: "https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=400&h=300&fit=crop",
+          links: [
+            { name: "Email Campaigns", url: "/email-campaigns", description: "Automated workflows", icon: "✉️" },
+            { name: "Newsletter Design", url: "/newsletter", description: "Beautiful templates", icon: "📄" },
+            { name: "CRM Integration", url: "/crm", description: "Manage relationships", icon: "🤝" },
+            { name: "Marketing Automation", url: "/automation", description: "Save time", icon: "🤖" },
+            { name: "Lead Nurturing", url: "/lead-nurturing", description: "Convert leads", icon: "🌱" },
+            { name: "Customer Segmentation", url: "/segmentation", description: "Target precisely", icon: "🎭" },
+          ],
+        },
+      ],
     },
-    { label: 'Partners', link: '/pricing' },
-    { label: 'Resources', link: '/about' },
-    { label: 'Company', link: '/contact' },
-    { label: 'Contact', link: '/contact' },
-  ];
+    {
+      label: "Solutions",
+      id: "solutions",
+      icon: "💡",
+      columns: [
+        {
+          title: "By Industry",
+          icon: "🏢",
+          image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
+          links: [
+            { name: "E-commerce", url: "/ecommerce", description: "Boost online sales", icon: "🛒" },
+            { name: "SaaS", url: "/saas", description: "Scale your software", icon: "💻" },
+            { name: "Healthcare", url: "/healthcare", description: "Patient acquisition", icon: "🏥" },
+            { name: "Finance", url: "/finance", description: "Build trust", icon: "💳" },
+            { name: "Real Estate", url: "/real-estate", description: "Sell properties faster", icon: "🏠" },
+            { name: "Education", url: "/education", description: "Attract students", icon: "🎓" },
+          ],
+        },
+        {
+          title: "By Business Size",
+          icon: "📐",
+          image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop",
+          links: [
+            { name: "Startups", url: "/startups", description: "Growth strategies", icon: "🚀" },
+            { name: "Small Business", url: "/small-business", description: "Affordable solutions", icon: "🏪" },
+            { name: "Enterprise", url: "/enterprise", description: "Scale operations", icon: "🏛️" },
+            { name: "Agencies", url: "/agencies", description: "White-label services", icon: "🤝" },
+            { name: "Freelancers", url: "/freelancers", description: "Personal branding", icon: "👤" },
+            { name: "Non-Profit", url: "/non-profit", description: "Mission-driven", icon: "❤️" },
+          ],
+        },
+        {
+          title: "Tools & Platforms",
+          icon: "🛠️",
+          image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
+          links: [
+            { name: "Analytics Dashboard", url: "/analytics", description: "Real-time insights", icon: "📊" },
+            { name: "Landing Page Builder", url: "/landing-pages", description: "No-code editor", icon: "🎨" },
+            { name: "A/B Testing", url: "/ab-testing", description: "Optimize conversions", icon: "🧪" },
+            { name: "Heatmap Tool", url: "/heatmap", description: "User behavior", icon: "🔥" },
+            { name: "Form Builder", url: "/forms", description: "Capture leads", icon: "📝" },
+            { name: "Chatbot", url: "/chatbot", description: "24/7 support", icon: "💬" },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Resources",
+      id: "resources",
+      icon: "📚",
+      columns: [
+        {
+          title: "Learn",
+          icon: "🎓",
+          image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop",
+          links: [
+            { name: "Blog", url: "/blog", description: "Latest insights", icon: "📝" },
+            { name: "Case Studies", url: "/case-studies", description: "Success stories", icon: "📖" },
+            { name: "Webinars", url: "/webinars", description: "Live training", icon: "🎥" },
+            { name: "E-books", url: "/ebooks", description: "Free downloads", icon: "📚" },
+            { name: "Guides", url: "/guides", description: "Step-by-step", icon: "🗺️" },
+            { name: "Templates", url: "/templates", description: "Ready to use", icon: "📄" },
+          ],
+        },
+        {
+          title: "Support",
+          icon: "🆘",
+          image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop",
+          links: [
+            { name: "Help Center", url: "/help", description: "Find answers", icon: "❓" },
+            { name: "Documentation", url: "/docs", description: "Technical guides", icon: "📋" },
+            { name: "API Reference", url: "/api", description: "Developer docs", icon: "⚡" },
+            { name: "Video Tutorials", url: "/tutorials", description: "Watch & learn", icon: "📹" },
+            { name: "Community Forum", url: "/forum", description: "Ask questions", icon: "💭" },
+            { name: "Contact Support", url: "/support", description: "Get help now", icon: "📞" },
+          ],
+        },
+        {
+          title: "Company",
+          icon: "🏢",
+          image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop",
+          links: [
+            { name: "About Us", url: "/about", description: "Our story", icon: "👋" },
+            { name: "Careers", url: "/careers", description: "Join our team", icon: "💼" },
+            { name: "Press Kit", url: "/press", description: "Media resources", icon: "📰" },
+            { name: "Partners", url: "/partners", description: "Collaboration", icon: "🤝" },
+            { name: "Testimonials", url: "/testimonials", description: "Client reviews", icon: "⭐" },
+            { name: "Awards", url: "/awards", description: "Recognition", icon: "🏆" },
+          ],
+        },
+      ],
+    },
+  ]
 
-  getNavLinks(): NavLink[] {
-    return [
-      {
-        id: 'seo1',
-        title: 'Keyword Research',
-        href: '#',
-        description: 'Find profitable keywords with search volume data',
-        icon: '🔍',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo2',
-        title: 'Rank Tracking',
-        href: '#',
-        description: 'Monitor search rankings across locations',
-        icon: '📈',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo3',
-        title: 'Technical SEO Audit',
-        href: '#',
-        description: 'Comprehensive site health analysis',
-        icon: '🔧',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo4',
-        title: 'Backlink Analysis',
-        href: '#',
-        description: 'Track and analyze link building efforts',
-        icon: '🔗',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo5',
-        title: 'Local SEO',
-        href: '#',
-        description: 'Optimize for local search results',
-        icon: '📍',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo6',
-        title: 'SEO Content',
-        href: '#',
-        description: 'AI-powered content improvement',
-        icon: '✍️',
-        category: 'SEO & Search',
-      },
-      {
-        id: 'seo7',
-        title: 'Site Speed',
-        href: '#',
-        description: 'Performance audit and optimization',
-        icon: '⚡',
-        category: 'SEO & Search',
-      },
-
-      {
-        id: 'content1',
-        title: 'Content Strategy',
-        href: '#',
-        description: 'Plan and execute content roadmap',
-        icon: '🎯',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content2',
-        title: 'Blog Management',
-        href: '#',
-        description: 'Schedule, publish, and analyze',
-        icon: '📝',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content3',
-        title: 'Content Calendar',
-        href: '#',
-        description: 'Visual planning and collaboration',
-        icon: '📅',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content4',
-        title: 'AI Content Generator',
-        href: '#',
-        description: 'Create content with AI assistance',
-        icon: '🤖',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content5',
-        title: 'Content Distribution',
-        href: '#',
-        description: 'Amplify reach across channels',
-        icon: '📢',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content6',
-        title: 'Content Performance',
-        href: '#',
-        description: 'Track engagement and conversions',
-        icon: '📊',
-        category: 'Content Marketing',
-      },
-      {
-        id: 'content7',
-        title: 'Video Content',
-        href: '#',
-        description: 'Create and optimize video marketing',
-        icon: '🎥',
-        category: 'Content Marketing',
-      },
-
-      {
-        id: 'ads1',
-        title: 'Google Ads',
-        href: '#',
-        description: 'PPC campaign optimization',
-        icon: '🎨',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads2',
-        title: 'Facebook Ads',
-        href: '#',
-        description: 'Social media advertising suite',
-        icon: '📱',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads3',
-        title: 'Programmatic Display',
-        href: '#',
-        description: 'Automated display advertising',
-        icon: '🖥️',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads4',
-        title: 'Retargeting',
-        href: '#',
-        description: 'Win back lost visitors',
-        icon: '↩️',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads5',
-        title: 'Ad Creative Studio',
-        href: '#',
-        description: 'Design and test ad variations',
-        icon: '🎨',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads6',
-        title: 'Conversion Tracking',
-        href: '#',
-        description: 'ROI measurement and attribution',
-        icon: '💸',
-        category: 'Advertising',
-      },
-      {
-        id: 'ads7',
-        title: 'Bidding Strategies',
-        href: '#',
-        description: 'AI-powered bid optimization',
-        icon: '⚖️',
-        category: 'Advertising',
-      },
-
-      {
-        id: 'social1',
-        title: 'Social Scheduling',
-        href: '#',
-        description: 'Post across all platforms',
-        icon: '⏰',
-        category: 'Social Media',
-      },
-      {
-        id: 'social2',
-        title: 'Social Listening',
-        href: '#',
-        description: 'Monitor brand mentions',
-        icon: '👂',
-        category: 'Social Media',
-      },
-      {
-        id: 'social3',
-        title: 'Influencer Marketing',
-        href: '#',
-        description: 'Find and manage influencers',
-        icon: '🌟',
-        category: 'Social Media',
-      },
-      {
-        id: 'social4',
-        title: 'Social Analytics',
-        href: '#',
-        description: 'Track engagement and growth',
-        icon: '📈',
-        category: 'Social Media',
-      },
-      {
-        id: 'social5',
-        title: 'Community Management',
-        href: '#',
-        description: 'Engage with your audience',
-        icon: '👥',
-        category: 'Social Media',
-      },
-      {
-        id: 'social6',
-        title: 'Social Commerce',
-        href: '#',
-        description: 'Sell directly on social',
-        icon: '🛒',
-        category: 'Social Media',
-      },
-      {
-        id: 'social7',
-        title: 'Content Moderation',
-        href: '#',
-        description: 'AI comment management',
-        icon: '🛡️',
-        category: 'Social Media',
-      },
-
-      {
-        id: 'analytics1',
-        title: 'Dashboard Builder',
-        href: '#',
-        description: 'Custom analytics dashboards',
-        icon: '📊',
-        category: 'Analytics',
-      },
-      {
-        id: 'analytics2',
-        title: 'Multi-Channel Attribution',
-        href: '#',
-        description: 'Track customer journey',
-        icon: '🛤️',
-        category: 'Analytics',
-      },
-      {
-        id: 'analytics3',
-        title: 'Real-Time Analytics',
-        href: '#',
-        description: 'Live data and insights',
-        icon: '⚡',
-        category: 'Analytics',
-      },
-      {
-        id: 'analytics4',
-        title: 'Custom Reports',
-        href: '#',
-        description: 'Create branded reports',
-        icon: '📑',
-        category: 'Analytics',
-      },
-      {
-        id: 'analytics5',
-        title: 'Predictive Analytics',
-        href: '#',
-        description: 'Forecast trends',
-        icon: '🔮',
-        category: 'Analytics',
-      },
-      {
-        id: 'analytics6',
-        title: 'Data Visualization',
-        href: '#',
-        description: 'Interactive charts',
-        icon: '📈',
-        category: 'Analytics',
-      },
-
-      {
-        id: 'creative1',
-        title: 'Graphic Design',
-        href: '#',
-        description: 'Create marketing visuals',
-        icon: '🎨',
-        category: 'Creative',
-      },
-      {
-        id: 'creative2',
-        title: 'Video Editing',
-        href: '#',
-        description: 'Produce marketing videos',
-        icon: '🎬',
-        category: 'Creative',
-      },
-      {
-        id: 'creative3',
-        title: 'Brand Asset Management',
-        href: '#',
-        description: 'Organize brand files',
-        icon: '📁',
-        category: 'Creative',
-      },
-      {
-        id: 'creative4',
-        title: 'Template Library',
-        href: '#',
-        description: 'Marketing templates',
-        icon: '📋',
-        category: 'Creative',
-      },
-      {
-        id: 'creative5',
-        title: 'Image Optimization',
-        href: '#',
-        description: 'Compress and format images',
-        icon: '🖼️',
-        category: 'Creative',
-      },
-
-      {
-        id: 'auto1',
-        title: 'Workflow Automation',
-        href: '#',
-        description: 'Automate repetitive tasks',
-        icon: '⚙️',
-        category: 'Automation',
-      },
-      {
-        id: 'auto2',
-        title: 'Email Marketing',
-        href: '#',
-        description: 'Automated email campaigns',
-        icon: '📧',
-        category: 'Automation',
-      },
-      {
-        id: 'auto3',
-        title: 'Lead Scoring',
-        href: '#',
-        description: 'AI-powered lead qualification',
-        icon: '🎯',
-        category: 'Automation',
-      },
-      {
-        id: 'auto4',
-        title: 'CRM Integration',
-        href: '#',
-        description: 'Sync with customer data',
-        icon: '🔌',
-        category: 'Automation',
-      },
-      {
-        id: 'auto5',
-        title: 'Chatbots',
-        href: '#',
-        description: 'AI customer support',
-        icon: '💬',
-        category: 'Automation',
-      },
-    ];
+  @HostListener("window:scroll")
+  onWindowScroll() {
+    this.scrolled = window.scrollY > 50
   }
 
-  getCategorizedLinks(): { category: string; links: NavLink[] }[] {
-    const links = this.getNavLinks();
-    const categories = [...new Set(links.map((link) => link.category))];
-    return categories.map((category) => ({
-      category,
-      links: links.filter((link) => link.category === category),
-    }));
+  @HostListener("mousemove", ["$event"])
+  onMouseMove(event: MouseEvent) {
+    this.mouseX = event.clientX
+    this.mouseY = event.clientY
   }
 
-  ngOnInit() {
-    this.checkScreenSize();
-    this.navLinksCache = this.getNavLinks();
-    this.categorizedLinksCache = this.getCategorizedLinks(); 
+  onLogoMouseMove(event: MouseEvent) {
+    if (!this.magneticLogo) return
+
+    const logo = this.magneticLogo.nativeElement
+    const rect = logo.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+
+    const deltaX = (event.clientX - centerX) * 0.3
+    const deltaY = (event.clientY - centerY) * 0.3
+
+    this.logoTransform = { x: deltaX, y: deltaY }
   }
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkScreenSize();
+  onLogoMouseLeave() {
+    this.logoTransform = { x: 0, y: 0 }
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.header')) {
-      this.activeDropdown = null;
-      if (this.dropdownCloseTimeout) {
-        clearTimeout(this.dropdownCloseTimeout);
-        this.dropdownCloseTimeout = null;
-      }
-      if (this.isMobile) {
-        this.isMenuOpen = false;
-      }
-    }
+  toggleDropdown(id: string) {
+    this.activeDropdown = this.activeDropdown === id ? null : id
   }
 
-  checkScreenSize() {
-    this.isMobile = window.innerWidth < 768;
+  closeDropdown() {
+    this.activeDropdown = null
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    if (!this.isMenuOpen) {
-      this.activeDropdown = null;
-    }
-  }
-
-  toggleDropdown(label: string, event: MouseEvent) {
-    event.stopPropagation();
-    if (this.isMobile) {
-      this.activeDropdown = this.activeDropdown === label ? null : label;
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = "hidden"
     } else {
-      this.activeDropdown = label;
+      document.body.style.overflow = ""
     }
   }
 
-  private dropdownCloseTimeout: any = null;
-  closeDelay = 150; // ms (tweakable)
-
-  onMouseEnter(label: string) {
-    if (!this.isMobile) {
-      if (this.dropdownCloseTimeout) {
-        clearTimeout(this.dropdownCloseTimeout);
-        this.dropdownCloseTimeout = null;
-      }
-      this.activeDropdown = label;
-    }
+  closeMobileMenu() {
+    this.mobileMenuOpen = false
+    this.activeDropdown = null
+    document.body.style.overflow = ""
   }
 
-  onMouseLeave() {
-    if (!this.isMobile) {
-      if (this.dropdownCloseTimeout) clearTimeout(this.dropdownCloseTimeout);
-      this.dropdownCloseTimeout = setTimeout(() => {
-        this.activeDropdown = null;
-        this.dropdownCloseTimeout = null;
-      }, this.closeDelay);
-    }
+  getLogoTransform(): string {
+    return `translate(${this.logoTransform.x}px, ${this.logoTransform.y}px)`
   }
 
-  isDropdownActive(label: string): boolean {
-    return this.activeDropdown === label;
-  }
+  dropdownTimer: any = null
+
+openDropdown(id: string) {
+  clearTimeout(this.dropdownTimer)
+  this.activeDropdown = id
+}
+
+closeDropdownDelayed() {
+  this.dropdownTimer = setTimeout(() => {
+    this.activeDropdown = null
+  }, 200)
+}
+
 }

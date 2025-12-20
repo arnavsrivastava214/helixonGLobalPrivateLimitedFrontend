@@ -1,0 +1,213 @@
+<section class="pricing-section" aria-labelledby="pricing-title">
+    <div class="container">
+      <!-- Header -->
+      <div class="section-header">
+        <div class="header-content">
+          <h1 id="pricing-title" class="section-title">
+            Pricing Plans That Scale With You
+          </h1>
+          <p class="section-subtitle">
+            Choose the perfect plan for your digital marketing needs. 
+            <span class="highlight">No hidden fees</span>, cancel anytime.
+          </p>
+        </div>
+  
+        <!-- Billing Toggle -->
+        <div class="billing-toggle-container">
+          <div class="toggle-wrapper">
+            <span class="toggle-label" [class.active]="!isYearlyBilling">
+              Monthly Billing
+            </span>
+            
+            <div class="toggle-switch" (click)="toggleBilling()" 
+                 [attr.aria-checked]="isYearlyBilling"
+                 role="switch"
+                 tabindex="0"
+                 (keydown.enter)="toggleBilling()">
+              <div class="toggle-slider" [class.active]="isYearlyBilling">
+                <div class="toggle-dot"></div>
+              </div>
+            </div>
+            
+            <span class="toggle-label" [class.active]="isYearlyBilling">
+              Yearly Billing
+              <span class="savings-badge" *ngIf="isYearlyBilling">
+                Save up to 20%
+              </span>
+            </span>
+          </div>
+          
+          <div class="toggle-description" *ngIf="isYearlyBilling">
+            <span class="savings-text">✨ Get 2 months free with annual billing</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Pricing Cards -->
+      <div class="pricing-grid">
+        <div *ngFor="let plan of plans" 
+             class="pricing-card"
+             [class.popular]="plan.popular"
+             [class.selected]="isPlanSelected(plan.id)"
+             [attr.aria-labelledby]="'plan-title-' + plan.id"
+             role="article"
+             (click)="selectPlan(plan)"
+             (keydown.enter)="selectPlan(plan)"
+             tabindex="0">
+          
+          <!-- Popular Badge -->
+          <div *ngIf="plan.popular" class="popular-ribbon" aria-label="Most Popular Plan">
+            <div class="ribbon-content">
+              <span class="ribbon-text">🔥 MOST POPULAR</span>
+            </div>
+          </div>
+  
+          <!-- Plan Icon -->
+          <div class="plan-icon" aria-hidden="true">
+            {{ plan.icon }}
+          </div>
+  
+          <!-- Card Header -->
+          <div class="card-header">
+            <h3 [id]="'plan-title-' + plan.id" class="plan-name">{{ plan.name }}</h3>
+            <p class="plan-tagline">{{ plan.tagline }}</p>
+            <p class="plan-description">{{ plan.description }}</p>
+          </div>
+  
+          <!-- Price Section -->
+          <div class="price-section">
+            <div class="price-wrapper">
+              <span class="currency" aria-hidden="true">$</span>
+              <span class="price" [attr.aria-label]="getPrice(plan) + ' dollars per ' + getBillingPeriod()">
+                {{ getPrice(plan) }}
+              </span>
+              <div class="period-wrapper">
+                <span class="period">/{{ getBillingPeriod() }}</span>
+                <span class="monthly-equivalent" *ngIf="isYearlyBilling">
+                  ≈ ${{ getMonthlyEquivalent(plan) }}/month
+                </span>
+              </div>
+            </div>
+            
+            <!-- Savings Indicator -->
+            <div *ngIf="isYearlyBilling" class="savings-indicator">
+              <div class="savings-tag">
+                <svg class="savings-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                Save {{ getSavings(plan) }}%
+              </div>
+            </div>
+          </div>
+  
+          <!-- Features List -->
+          <ul class="features-list" aria-label="Plan features">
+            <li *ngFor="let feature of plan.features" class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="feature-text">{{ feature }}</span>
+            </li>
+          </ul>
+  
+          <!-- CTA Button -->
+          <button 
+            class="cta-button" 
+            [class.primary]="plan.ctaVariant === 'primary'"
+            [attr.aria-label]="'Select ' + plan.name + ' plan'"
+            (click)="selectPlan(plan); $event.stopPropagation()">
+            {{ plan.ctaText }}
+            <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 17l5-5-5-5v10z"/>
+            </svg>
+          </button>
+  
+          <!-- Additional Info -->
+          <div class="plan-footer">
+            <p class="billing-info">
+              <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+              </svg>
+              {{ isYearlyBilling ? 'Billed annually' : 'Billed monthly' }}
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Trust Indicators -->
+      <div class="trust-section" aria-label="Trust indicators">
+        <div class="trust-grid">
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+              </svg>
+            </div>
+            <div class="trust-content">
+              <h4 class="trust-title">30-Day Guarantee</h4>
+              <p class="trust-desc">Full refund if not satisfied</p>
+            </div>
+          </div>
+          
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div class="trust-content">
+              <h4 class="trust-title">No Lock-in</h4>
+              <p class="trust-desc">Cancel anytime, no contracts</p>
+            </div>
+          </div>
+          
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+              </svg>
+            </div>
+            <div class="trust-content">
+              <h4 class="trust-title">24/7 Support</h4>
+              <p class="trust-desc">Dedicated team available</p>
+            </div>
+          </div>
+          
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM3 18.5V7c1.1-.35 2.3-.5 3.5-.5 1.34 0 3.13.41 4.5.99v11.5C9.63 18.41 7.84 18 6.5 18c-1.2 0-2.4.15-3.5.5zm18 0c-1.1-.35-2.3-.5-3.5-.5-1.34 0-3.13.41-4.5.99V7.49c1.37-.59 3.16-.99 4.5-.99 1.2 0 2.4.15 3.5.5v11.5z"/>
+              </svg>
+            </div>
+            <div class="trust-content">
+              <h4 class="trust-title">SOC 2 Certified</h4>
+              <p class="trust-desc">Enterprise-grade security</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h3 class="faq-title">Frequently Asked Questions</h3>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4 class="faq-question">Can I switch plans later?</h4>
+            <p class="faq-answer">Yes, you can upgrade or downgrade at any time. Changes take effect immediately.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question">Is there a free trial?</h4>
+            <p class="faq-answer">Yes! All paid plans include a 14-day free trial with full access to features.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question">Do you offer custom plans?</h4>
+            <p class="faq-answer">Absolutely! Contact our sales team for custom enterprise solutions.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question">What payment methods do you accept?</h4>
+            <p class="faq-answer">We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

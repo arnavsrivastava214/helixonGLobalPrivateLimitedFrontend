@@ -1,128 +1,200 @@
-<header class="header">
-  <div class="header__container">
-    <div class="header__logo">
-      <a href="/" class="logo">
-        <span class="logo__text">Helixson Global</span>
-        <span class="logo__accent"> Marketing</span>
-      </a>
+<header class="header" [class.scrolled]="scrolled">
+  <div class="header-background"></div>
+
+  <div class="header-content">
+    <div class="logo">
+      <img
+        src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=262,fit=crop,q=95/mv0DXgB5KwFZZN5w/helixson-removebg-preview-1-dWxyVDKB4gtp83RN.png"
+        alt=""
+      />
+      <span class="logo-text"
+        >Digital<span class="gradient-text">Hub</span></span
+      >
     </div>
 
-    <nav class="header__nav" [class.header__nav--open]="isMenuOpen">
-      <ul class="nav__list">
-        <li
+    <nav class="desktop-nav">
+      <div class="nav-items">
+        <div
           *ngFor="let item of menuItems"
-          class="nav__item"
-          [class.nav__item--has-dropdown]="item.children"
-          (mouseenter)="onMouseEnter(item.label)"
-          (mouseleave)="onMouseLeave()"
+          class="nav-item"
+          (mouseenter)="toggleDropdown(item.id)"
+          (mouseleave)="closeDropdown()"
         >
-          <a
-            *ngIf="!item.children; else dropdown"
-            [href]="item.link"
-            class="nav__link"
-          >
+          <button class="nav-link">
             {{ item.label }}
-          </a>
+            <svg
+              class="chevron"
+              [class.rotate]="activeDropdown === item.id"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M4 6L8 10L12 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
 
-          <ng-template #dropdown>
-            <button
-              class="nav__link nav__link--dropdown"
-              (click)="toggleDropdown(item.label, $event)"
-            >
-              {{ item.label }}
-              <svg
-                class="dropdown-icon"
-                [class.dropdown-icon--active]="isDropdownActive(item.label)"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M4 6L8 10L12 6"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-            <div
-              class="mega-dropdown"
-              [class.mega-dropdown--active]="isDropdownActive(item.label)"
-            >
-              <div class="mega-dropdown__container">
+          <div
+            class="mega-dropdown"
+            [class.active]="activeDropdown === item.id"
+          >
+            <div class="dropdown-content">
+              <div class="dropdown-columns">
                 <div
-                  *ngFor="
-                    let categoryGroup of categorizedLinksCache;
-                    let i = index
-                  "
-                  class="mega-dropdown__category"
-                  [style.animation-delay.ms]="i * 60"
+                  *ngFor="let column of item.columns"
+                  class="dropdown-column"
                 >
-                  <h3 class="mega-dropdown__category-title">
-                    <span class="category-title-gradient">{{
-                      categoryGroup.category
-                    }}</span>
-                  </h3>
-                  <ul class="mega-dropdown__list">
-                    <li
-                      *ngFor="let link of categoryGroup.links; let j = index"
-                      class="mega-dropdown__item"
-                      [style.animation-delay.ms]="i * 60 + j * 40"
-                    >
-                      <a [href]="link.href" class="mega-dropdown__link">
-                        <span class="mega-dropdown__icon">{{ link.icon }}</span>
-                        <div class="mega-dropdown__content">
-                          <span class="mega-dropdown__title">{{
-                            link.title
-                          }}</span>
-                          <span class="mega-dropdown__description">{{
-                            link.description
-                          }}</span>
-                        </div>
-                        <svg
-                          class="mega-dropdown__arrow"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                        >
-                          <path
-                            d="M6 3L11 8L6 13"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
+                  <h3 class="column-title">{{ column.title }}</h3>
+                  <ul class="column-links">
+                    <li *ngFor="let link of column.links">
+                      <a [href]="link.url" class="dropdown-link">
+                        <span class="link-icon">→</span>
+                        {{ link.name }}
                       </a>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-          </ng-template>
-        </li>
-      </ul>
+          </div>
+        </div>
 
-      <div class="header__cta">
-        <a routerLink="/login" class="btn btn--primary">
-          <span class="btn__text">Login</span>
-          <span class="btn__icon">→</span>
-        </a>
+        <a href="/pricing" class="nav-link simple">Pricing</a>
+        <a href="/contact" class="nav-link simple">Contact</a>
+      </div>
+
+      <div class="header-actions">
       </div>
     </nav>
 
     <button
-      class="hamburger"
-      [class.hamburger--active]="isMenuOpen"
-      (click)="toggleMenu()"
-      aria-label="Toggle menu"
+      class="mobile-menu-btn"
+      (click)="toggleMobileMenu()"
+      [class.active]="mobileMenuOpen"
     >
-      <span class="hamburger__line"></span>
-      <span class="hamburger__line"></span>
-      <span class="hamburger__line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
     </button>
+  </div>
+
+  <div class="mobile-menu" [class.open]="mobileMenuOpen">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <div class="logo">
+          <svg viewBox="0 0 40 40" class="logo-icon">
+            <defs>
+              <linearGradient
+                id="logoGradientMobile"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #a855f7" />
+                <stop offset="100%" style="stop-color: #ec4899" />
+              </linearGradient>
+            </defs>
+            <circle
+              cx="20"
+              cy="20"
+              r="18"
+              fill="none"
+              stroke="url(#logoGradientMobile)"
+              stroke-width="2"
+            />
+            <path
+              d="M12 20 L18 26 L28 14"
+              fill="none"
+              stroke="url(#logoGradientMobile)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo-text"
+            >Digital<span class="gradient-text">Hub</span></span
+          >
+        </div>
+        <button class="close-btn" (click)="closeMobileMenu()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-nav">
+        <div *ngFor="let item of menuItems" class="mobile-nav-section">
+          <button class="mobile-nav-title" (click)="toggleDropdown(item.id)">
+            {{ item.label }}
+            <svg
+              class="chevron"
+              [class.rotate]="activeDropdown === item.id"
+              width="20"
+              height="20"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M4 6L8 10L12 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="mobile-dropdown"
+            [class.open]="activeDropdown === item.id"
+          >
+            <div *ngFor="let column of item.columns" class="mobile-column">
+              <h4 class="mobile-column-title">{{ column.title }}</h4>
+              <ul class="mobile-links">
+                <li *ngFor="let link of column.links">
+                  <a [href]="link.url" (click)="closeMobileMenu()">{{
+                    link.name
+                  }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-simple-links">
+          <a
+            href="/pricing"
+            class="mobile-simple-link"
+            (click)="closeMobileMenu()"
+            >Pricing</a
+          >
+          <a
+            href="/contact"
+            class="mobile-simple-link"
+            (click)="closeMobileMenu()"
+            >Contact</a
+          >
+        </div>
+      </div>
+
+      <div class="mobile-actions">
+        <button class="btn-secondary" (click)="closeMobileMenu()">
+          Sign In
+        </button>
+        <button class="btn-primary" (click)="closeMobileMenu()">
+          Get Started
+        </button>
+      </div>
+    </div>
   </div>
 </header>

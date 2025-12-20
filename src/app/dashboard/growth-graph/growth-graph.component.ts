@@ -1,14 +1,10 @@
 import { Component, type OnInit, type OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Metric {
-  label: string;
-  value: number;
-  target: number;
-  prefix?: string;
-  suffix?: string;
-  growth: number;
-  color: string;
+interface Slide {
+  id: number
+  title: string
+  description: string
+  imageUrl: string
 }
 
 @Component({
@@ -18,168 +14,123 @@ interface Metric {
   styleUrl: './growth-graph.component.scss',
 })
 export class GrowthGraphComponent {
-  metrics: Metric[] = [
+  slides: Slide[] = [
     {
-      label: 'Active Users',
-      value: 0,
-      target: 24567,
-      suffix: '',
-      growth: 23.5,
-      color: '#6366f1',
+      id: 1,
+      title: "Digital Strategy",
+      description: "Transform your business with data-driven digital marketing strategies",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop",
     },
     {
-      label: 'Conversion Rate',
-      value: 0,
-      target: 8.7,
-      suffix: '%',
-      growth: 12.3,
-      color: '#10b981',
+      id: 2,
+      title: "Brand Growth",
+      description: "Accelerate your brand presence across all digital channels",
+      imageUrl: "https://images.unsplash.com/photo-1557838923-2985c318be48?w=1200&h=800&fit=crop",
     },
     {
-      label: 'ROI',
-      value: 0,
-      target: 342,
-      suffix: '%',
-      growth: 45.2,
-      color: '#f59e0b',
+      id: 3,
+      title: "Content Marketing",
+      description: "Engage your audience with compelling content that converts",
+      imageUrl: "https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=1200&h=800&fit=crop",
     },
     {
-      label: 'Engagement',
-      value: 0,
-      target: 87.3,
-      suffix: '%',
-      growth: 18.7,
-      color: '#ec4899',
+      id: 4,
+      title: "Analytics & Insights",
+      description: "Make informed decisions with powerful analytics and reporting",
+      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop",
     },
     {
-      label: 'Monthly Traffic',
-      value: 0,
-      target: 156789,
-      suffix: '',
-      growth: 34.1,
-      color: '#8b5cf6',
+      id: 5,
+      title: "Social Media",
+      description: "Build meaningful connections with your audience on social platforms",
+      imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=800&fit=crop",
     },
-    {
-      label: 'Leads Generated',
-      value: 0,
-      target: 4523,
-      suffix: '',
-      growth: 28.9,
-      color: '#06b6d4',
-    },
-  ];
+  ]
 
-  chartData: number[] = [45, 52, 48, 65, 70, 68, 85, 90, 88, 95, 100, 98];
-  animatedChartData: number[] = new Array(12).fill(0);
-  liveDataPoints: number[] = [45, 52, 48, 65, 70, 68, 85, 90, 88, 95, 100, 98];
-  currentDataIndex = 0;
-  isGraphRunning = true;
+  currentIndex = 0
+  autoplayInterval: any
+  touchStartX = 0
+  touchEndX = 0
 
-  private intervals: any[] = [];
-
-  ngOnInit() {
-    this.animateMetrics();
-    this.animateChart();
-    this.startRealTimeUpdates();
+  ngOnInit(): void {
+    this.startAutoplay()
   }
 
-  ngOnDestroy() {
-    this.intervals.forEach((interval) => clearInterval(interval));
+  ngOnDestroy(): void {
+    this.stopAutoplay()
   }
 
-  animateMetrics() {
-    this.metrics.forEach((metric, index) => {
-      const duration = 2000;
-      const steps = 60;
-      const increment = metric.target / steps;
-      let currentStep = 0;
-
-      const interval = setInterval(() => {
-        if (currentStep < steps) {
-          metric.value += increment;
-          currentStep++;
-        } else {
-          metric.value = metric.target;
-          clearInterval(interval);
-        }
-      }, duration / steps);
-
-      this.intervals.push(interval);
-    });
+  goToSlide(index: number): void {
+    this.currentIndex = index
+    this.resetAutoplay()
   }
 
-  animateChart() {
-    this.chartData.forEach((value, index) => {
-      setTimeout(() => {
-        const duration = 500;
-        const steps = 30;
-        const increment = value / steps;
-        let currentStep = 0;
-
-        const interval = setInterval(() => {
-          if (currentStep < steps) {
-            this.animatedChartData[index] += increment;
-            currentStep++;
-          } else {
-            this.animatedChartData[index] = value;
-            clearInterval(interval);
-          }
-        }, duration / steps);
-
-        this.intervals.push(interval);
-      }, index * 100);
-    });
+  nextSlide(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length
+    this.resetAutoplay()
   }
 
-  startRealTimeUpdates() {
-    const metricsInterval = setInterval(() => {
-      if (this.isGraphRunning) {
-        this.metrics.forEach((metric) => {
-          const variation = (Math.random() - 0.5) * (metric.target * 0.05);
-          metric.value = Math.max(
-            0,
-            Math.min(metric.target * 1.2, metric.value + variation)
-          );
-          metric.growth = Number((15 + Math.random() * 30).toFixed(1));
-        });
-      }
-    }, 3000);
-    this.intervals.push(metricsInterval);
-
-    const chartInterval = setInterval(() => {
-      if (this.isGraphRunning) {
-        this.chartData.shift();
-        this.animatedChartData.shift();
-
-        const newValue = 70 + Math.random() * 30; // Random value between 70-100 showing growth
-        this.chartData.push(newValue);
-        this.animatedChartData.push(0);
-
-        setTimeout(() => {
-          this.animatedChartData[this.animatedChartData.length - 1] = newValue;
-        }, 50);
-      }
-    }, 2000);
-    this.intervals.push(chartInterval);
+  prevSlide(): void {
+    this.currentIndex = this.currentIndex === 0 ? this.slides.length - 1 : this.currentIndex - 1
+    this.resetAutoplay()
   }
 
-  formatNumber(num: number): string {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M';
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K';
+  getSlideClass(index: number): string {
+    const diff = index - this.currentIndex
+
+    if (diff === 0) return "active"
+    if (diff === 1 || diff === -(this.slides.length - 1)) return "next"
+    if (diff === -1 || diff === this.slides.length - 1) return "prev"
+    if (diff === 2 || diff === -(this.slides.length - 2)) return "next-2"
+    if (diff === -2 || diff === this.slides.length - 2) return "prev-2"
+
+    return "hidden"
+  }
+
+  startAutoplay(): void {
+    this.autoplayInterval = setInterval(() => {
+      this.nextSlide()
+    }, 5000)
+  }
+
+  stopAutoplay(): void {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval)
     }
-    return num.toFixed(num % 1 === 0 ? 0 : 1);
   }
 
-  generateLinePoints(): string {
-    const width = 100 / this.animatedChartData.length;
-    return this.animatedChartData
-      .map((value, index) => {
-        const x = index * width + width / 2;
-        const y = 100 - value;
-        return `${x},${y}`;
-      })
-      .join(' ');
+  resetAutoplay(): void {
+    this.stopAutoplay()
+    this.startAutoplay()
+  }
+
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.changedTouches[0].screenX
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    this.touchEndX = event.changedTouches[0].screenX
+    this.handleSwipe()
+  }
+
+  handleSwipe(): void {
+    const swipeThreshold = 50
+    const diff = this.touchStartX - this.touchEndX
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        this.nextSlide()
+      } else {
+        this.prevSlide()
+      }
+    }
+  }
+
+  onMouseEnter(): void {
+    this.stopAutoplay()
+  }
+
+  onMouseLeave(): void {
+    this.startAutoplay()
   }
 }

@@ -1,0 +1,45 @@
+<section class="our-process" [@stepAnimation]>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Our Process</h2>
+        <p class="section-subtitle">A systematic approach to digital excellence</p>
+        <div class="header-divider"></div>
+      </div>
+  
+      <div class="process-container">
+        <!-- Timeline Connector -->
+        <div class="timeline-line" aria-hidden="true"></div>
+        
+        <!-- Process Steps -->
+        <div 
+          class="process-step" 
+          *ngFor="let step of processSteps"
+          [@cardHover]="hoveredStep === step.id ? 'hovered' : 'normal'"
+          (mouseenter)="setHoverState(step.id, true)"
+          (mouseleave)="setHoverState(step.id, false)"
+          [attr.aria-label]="'Step ' + step.id + ': ' + step.title"
+        >
+          <div class="step-number-container">
+            <span class="step-number">{{ step.id }}</span>
+            <div class="step-icon">{{ step.icon }}</div>
+          </div>
+          
+          <div class="step-content">
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-description">{{ step.description }}</p>
+          </div>
+          
+          <!-- Connection Arrow -->
+          <div class="step-arrow" *ngIf="step.id < processSteps.length" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+  
+      <div class="process-footer">
+        <p class="footer-text">Each step is meticulously executed with transparent reporting and regular consultations</p>
+      </div>
+    </div>
+  </section>
