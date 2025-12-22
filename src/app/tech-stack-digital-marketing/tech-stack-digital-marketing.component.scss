@@ -1,0 +1,363 @@
+// Variables - Simplified for black/white theme
+$black-bg: #000000;
+$card-bg: #1a1a1a;
+$text-white: #ffffff;
+$text-muted: #cccccc;
+$border-color: #333333;
+
+// Tech & Marketing specific colors for subtle distinction
+$tech-accent: #3b82f6;
+$marketing-accent: #8b5cf6;
+$negative-color: #ff4444;
+$positive-color: #44ff44;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+@mixin transition-all {
+  transition: all 0.3s ease;
+}
+
+@mixin badge-style($bg-color) {
+  background: $bg-color;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Component Styles
+.stack-container {
+  background: $black-bg;
+  color: $text-white;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  .title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: $text-white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    
+    .gradient-text {
+      background: linear-gradient(to right, $tech-accent, $marketing-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: $text-muted;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.highlight {
+  color: $text-white;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 0.3rem;
+  border-radius: 4px;
+}
+
+.badges-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+  flex-wrap: wrap;
+  
+  .badge {
+    @include badge-style(linear-gradient(135deg, #333333, #1a1a1a));
+    
+    &.mix-badge {
+      background: linear-gradient(135deg, #333333, #1a1a1a);
+      border-left: 3px solid $tech-accent;
+    }
+    
+    &.trust-badge {
+      background: linear-gradient(135deg, #333333, #1a1a1a);
+      border-left: 3px solid $positive-color;
+    }
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+.stacks-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+}
+
+.stack-card {
+  background: $card-bg;
+  border-radius: 20px;
+  padding: 2.5rem;
+  @include card-shadow;
+  @include transition-all;
+  border: 1px solid $border-color;
+  
+  &:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  }
+  
+  .stack-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    
+    .stack-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      @include flex-center;
+      margin-right: 1.5rem;
+      font-size: 1.8rem;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      
+      &.tech-icon {
+        background: rgba($tech-accent, 0.2);
+        border-color: rgba($tech-accent, 0.4);
+      }
+      
+      &.marketing-icon {
+        background: rgba($marketing-accent, 0.2);
+        border-color: rgba($marketing-accent, 0.4);
+      }
+    }
+    
+    .stack-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $text-white;
+    }
+  }
+  
+  .stack-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    .stack-item {
+      background: rgba(40, 40, 40, 0.8);
+      padding: 0.9rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: $text-white;
+      border: 1px solid $border-color;
+      @include transition-all;
+      
+      &:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      
+      i {
+        font-size: 1.2rem;
+      }
+      
+      &.tech-item i {
+        color: $tech-accent;
+      }
+      
+      &.marketing-item i {
+        color: $marketing-accent;
+      }
+    }
+  }
+}
+
+.results-section {
+  background: $card-bg;
+  border-radius: 20px;
+  padding: 3rem;
+  @include card-shadow;
+  border: 1px solid $border-color;
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    color: $text-white;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: $text-white;
+      border-radius: 2px;
+    }
+  }
+  
+  .results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    
+    .result-column {
+      background: rgba(40, 40, 40, 0.8);
+      border-radius: 16px;
+      padding: 2.5rem;
+      @include transition-all;
+      border: 1px solid $border-color;
+      
+      &.before-column {
+        border-top: 4px solid $negative-color;
+      }
+      
+      &.after-column {
+        border-top: 4px solid $positive-color;
+      }
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      }
+      
+      .column-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        text-align: center;
+        
+        &.negative-title {
+          color: $negative-color;
+        }
+        
+        &.positive-title {
+          color: $positive-color;
+        }
+      }
+      
+      .result-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding: 1.2rem;
+        border-radius: 12px;
+        background: rgba(30, 30, 30, 0.7);
+        border: 1px solid $border-color;
+        
+        .result-icon {
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          @include flex-center;
+          margin-right: 1.2rem;
+          font-size: 1.3rem;
+          border: 1px solid $border-color;
+          
+          &.result-negative {
+            background: rgba($negative-color, 0.1);
+            color: $negative-color;
+          }
+          
+          &.result-positive {
+            background: rgba($positive-color, 0.1);
+            color: $positive-color;
+          }
+        }
+        
+        .result-text {
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: $text-white;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .stack-container {
+    padding: 1.5rem;
+  }
+  
+  .header .title {
+    font-size: 2.2rem;
+  }
+  
+  .stacks-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .stack-card {
+    padding: 2rem;
+  }
+  
+  .results-section {
+    padding: 2rem;
+    
+    .results-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  
+  .badges-container {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stack-card .stack-items {
+    justify-content: center;
+  }
+  
+  .header .title {
+    font-size: 1.8rem;
+  }
+  
+  .stack-card .stack-header {
+    flex-direction: column;
+    text-align: center;
+    
+    .stack-icon {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+}

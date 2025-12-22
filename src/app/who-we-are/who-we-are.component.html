@@ -1,0 +1,377 @@
+<section class="who-we-are-section">
+    <!-- Background Elements -->
+    <div class="background-elements">
+      <div class="grid-pattern"></div>
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Section Header -->
+      <div class="section-header">
+        <div class="header-badge">
+          <span class="badge-icon">🎯</span>
+          IDEAL CLIENTS
+        </div>
+        <h1 class="section-title">
+          Who We Are <span class="highlight">Best For</span>
+        </h1>
+        <p class="section-subtitle">
+          At Helixson Global, we partner with visionaries and growth-focused businesses
+        </p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- For Section -->
+        <div class="for-section">
+          <div class="section-intro">
+            <div class="intro-icon">✓</div>
+            <h2 class="section-heading">We Work Best With</h2>
+            <p class="intro-text">Businesses committed to sustainable growth and digital transformation</p>
+          </div>
+
+          <div class="clients-grid">
+            <!-- Startup Founders Card -->
+            <div class="client-card" [class.active]="activeCard === 'startups'" (mouseenter)="setActiveCard('startups')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <div class="card-badge success">
+                  PERFECT FIT
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="client-type">Startups & Founders</h3>
+                <div class="match-score">
+                  <div class="score-bar">
+                    <div class="score-fill" [style.width.%]="95"></div>
+                  </div>
+                  <span class="score-value">95% Match</span>
+                </div>
+                <ul class="client-benefits">
+                  <li>Rapid MVP development</li>
+                  <li>Scalable tech architecture</li>
+                  <li>Investor-ready analytics</li>
+                  <li>Growth hacking strategies</li>
+                </ul>
+                <div class="client-stats">
+                  <div class="stat-item">
+                    <div class="stat-value">200+</div>
+                    <div class="stat-label">Startups Helped</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Success Rate</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="cta-button" (click)="showMore('startups')">
+                  Learn More
+                  <span class="arrow">→</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Local Businesses Card -->
+            <div class="client-card" [class.active]="activeCard === 'local'" (mouseenter)="setActiveCard('local')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                </div>
+                <div class="card-badge success">
+                  GREAT FIT
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="client-type">Local Businesses</h3>
+                <div class="match-score">
+                  <div class="score-bar">
+                    <div class="score-fill" [style.width.%]="88"></div>
+                  </div>
+                  <span class="score-value">88% Match</span>
+                </div>
+                <ul class="client-benefits">
+                  <li>Local SEO optimization</li>
+                  <li>Google Business management</li>
+                  <li>Community-focused marketing</li>
+                  <li>Mobile-first web solutions</li>
+                </ul>
+                <div class="client-stats">
+                  <div class="stat-item">
+                    <div class="stat-value">450+</div>
+                    <div class="stat-label">Local Clients</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Retention Rate</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="cta-button" (click)="showMore('local')">
+                  Learn More
+                  <span class="arrow">→</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Coaches & Institutes Card -->
+            <div class="client-card" [class.active]="activeCard === 'coaches'" (mouseenter)="setActiveCard('coaches')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <div class="card-badge success">
+                  EXCELLENT FIT
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="client-type">Coaches & Institutes</h3>
+                <div class="match-score">
+                  <div class="score-bar">
+                    <div class="score-fill" [style.width.%]="92"></div>
+                  </div>
+                  <span class="score-value">92% Match</span>
+                </div>
+                <ul class="client-benefits">
+                  <li>Learning management systems</li>
+                  <li>Student portal development</li>
+                  <li>Content marketing strategies</li>
+                  <li>Automated enrollment systems</li>
+                </ul>
+                <div class="client-stats">
+                  <div class="stat-item">
+                    <div class="stat-value">300+</div>
+                    <div class="stat-label">Institutes</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value">78%</div>
+                    <div class="stat-label">Growth Rate</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="cta-button" (click)="showMore('coaches')">
+                  Learn More
+                  <span class="arrow">→</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- E-commerce Brands Card -->
+            <div class="client-card featured" [class.active]="activeCard === 'ecommerce'" (mouseenter)="setActiveCard('ecommerce')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                </div>
+                <div class="card-badge success">
+                  TOP PERFORMER
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="client-type">E-commerce Brands</h3>
+                <div class="match-score">
+                  <div class="score-bar">
+                    <div class="score-fill" [style.width.%]="98"></div>
+                  </div>
+                  <span class="score-value">98% Match</span>
+                </div>
+                <ul class="client-benefits">
+                  <li>Complete store development</li>
+                  <li>Conversion rate optimization</li>
+                  <li>Multi-channel marketing</li>
+                  <li>Inventory & order management</li>
+                </ul>
+                <div class="client-stats">
+                  <div class="stat-item">
+                    <div class="stat-value">600+</div>
+                    <div class="stat-label">E-commerce Stores</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value">3.2x</div>
+                    <div class="stat-label">Avg. Revenue Growth</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="cta-button primary" (click)="showMore('ecommerce')">
+                  Get Started
+                  <span class="arrow">→</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="section-separator">
+          <div class="separator-line"></div>
+          <div class="separator-text">Our Commitment</div>
+          <div class="separator-line"></div>
+        </div>
+
+        <!-- Not For Section -->
+        <div class="not-for-section">
+          <div class="section-intro warning">
+            <div class="intro-icon">✗</div>
+            <h2 class="section-heading">We Are NOT For</h2>
+            <p class="intro-text">To maintain our quality standards and deliver exceptional results</p>
+          </div>
+
+          <div class="exclusion-grid">
+            <!-- Cheap Work -->
+            <div class="exclusion-card" [class.warning]="activeWarning === 'cheap'" (mouseenter)="setActiveWarning('cheap')">
+              <div class="exclusion-header">
+                <div class="warning-icon">✗</div>
+                <div class="exclusion-badge warning">
+                  NOT OUR STYLE
+                </div>
+              </div>
+              <div class="exclusion-content">
+                <h3 class="exclusion-title">One-time Cheap Work</h3>
+                <p class="exclusion-description">
+                  We focus on long-term partnerships, not quick fixes. Our value comes from sustainable solutions, not cheap one-offs.
+                </p>
+                <ul class="exclusion-reasons">
+                  <li>Compromises quality standards</li>
+                  <li>No ongoing support</li>
+                  <li>Limited strategic value</li>
+                  <li>Temporary solutions only</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- No Growth Mindset -->
+            <div class="exclusion-card" [class.warning]="activeWarning === 'nogrowth'" (mouseenter)="setActiveWarning('nogrowth')">
+              <div class="exclusion-header">
+                <div class="warning-icon">✗</div>
+                <div class="exclusion-badge warning">
+                  AVOID
+                </div>
+              </div>
+              <div class="exclusion-content">
+                <h3 class="exclusion-title">No-Growth Mindset</h3>
+                <p class="exclusion-description">
+                  We thrive with businesses that want to scale and innovate. Static, no-growth mindsets don't align with our approach.
+                </p>
+                <ul class="exclusion-reasons">
+                  <li>Resists innovation</li>
+                  <li>Fear of change</li>
+                  <li>Short-term thinking</li>
+                  <li>No learning culture</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Unrealistic Expectations -->
+            <div class="exclusion-card" [class.warning]="activeWarning === 'unrealistic'" (mouseenter)="setActiveWarning('unrealistic')">
+              <div class="exclusion-header">
+                <div class="warning-icon">✗</div>
+                <div class="exclusion-badge warning">
+                  RED FLAG
+                </div>
+              </div>
+              <div class="exclusion-content">
+                <h3 class="exclusion-title">Unrealistic Expectations</h3>
+                <p class="exclusion-description">
+                  We believe in transparency and achievable goals. Magic solutions and overnight success stories aren't sustainable.
+                </p>
+                <ul class="exclusion-reasons">
+                  <li>Expects instant results</li>
+                  <li>Unreasonable deadlines</li>
+                  <li>No budget alignment</li>
+                  <li>Lacks patience for process</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Non-Collaborative -->
+            <div class="exclusion-card" [class.warning]="activeWarning === 'noncollab'" (mouseenter)="setActiveWarning('noncollab')">
+              <div class="exclusion-header">
+                <div class="warning-icon">✗</div>
+                <div class="exclusion-badge warning">
+                  POOR FIT
+                </div>
+              </div>
+              <div class="exclusion-content">
+                <h3 class="exclusion-title">Non-Collaborative Partners</h3>
+                <p class="exclusion-description">
+                  Success comes from partnership. We don't work with clients who want to outsource thinking without engagement.
+                </p>
+                <ul class="exclusion-reasons">
+                  <li>Minimal involvement</li>
+                  <li>No feedback loops</li>
+                  <li>Poor communication</li>
+                  <li>Hands-off approach</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <div class="cta-content">
+          <h2 class="cta-title">Ready to Grow Together?</h2>
+          <p class="cta-description">
+            If our ideal client profile resonates with you, let's build something amazing together.
+          </p>
+          <div class="cta-buttons">
+            <button class="cta-primary" (click)="startConversation()">
+              <span class="button-icon">💬</span>
+              Start Conversation
+            </button>
+            <button class="cta-secondary" (click)="viewCaseStudies()">
+              <span class="button-icon">📊</span>
+              View Case Studies
+            </button>
+          </div>
+        </div>
+        <div class="cta-stats">
+          <div class="stat-card">
+            <div class="stat-value">94%</div>
+            <div class="stat-label">Client Satisfaction</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">5+ Years</div>
+            <div class="stat-label">Avg. Partnership</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">1500+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" *ngIf="showModal">
+      <div class="modal-content">
+        <button class="close-modal" (click)="closeModal()">×</button>
+        <div class="modal-icon">🎯</div>
+        <h3 class="modal-title">Perfect Match!</h3>
+        <p class="modal-description">
+          You're exactly the type of visionary partner we love working with. Let's discuss how we can help you achieve extraordinary growth.
+        </p>
+        <button class="modal-button" (click)="scheduleCall()">
+          Schedule Discovery Call
+        </button>
+      </div>
+    </div>
+  </section>

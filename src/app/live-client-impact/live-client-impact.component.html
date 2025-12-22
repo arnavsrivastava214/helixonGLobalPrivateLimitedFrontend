@@ -1,0 +1,283 @@
+<div class="live-impact-section">
+    <!-- Background Pattern -->
+    <div class="background-pattern">
+      <div class="pattern-grid"></div>
+      <div class="pattern-dots"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Header Section -->
+      <div class="section-header">
+        <div class="header-badge">
+          <span class="badge-icon">⚡</span>
+          LIVE CLIENT IMPACT
+        </div>
+        <h1 class="section-title">Results We Are Creating <span class="highlight">Right Now</span></h1>
+        <p class="section-subtitle">
+          Real-time metrics showcasing Helixson Global's digital marketing and IT solutions impact
+        </p>
+        <div class="header-divider">
+          <div class="divider-line"></div>
+          <div class="divider-dot"></div>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Live Stats Grid -->
+      <div class="stats-grid">
+        <!-- Leads Card -->
+        <div class="stat-card" [class.active]="activeCard === 'leads'">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99z"/>
+                <path d="M13 16h-2v2h2zm0-6h-2v4h2z"/>
+              </svg>
+            </div>
+            <div class="card-badge" [class.pulse]="metrics.leads.isLive">
+              {{ metrics.leads.isLive ? 'LIVE' : 'OFFLINE' }}
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="stat-value">
+              <span class="value-number">{{ metrics.leads.value | number:'1.0-0' }}</span>
+              <span class="value-trend" [class.positive]="metrics.leads.trend > 0">
+                {{ metrics.leads.trend > 0 ? '↗' : '↘' }}
+                {{ metrics.leads.trend > 0 ? '+' : '' }}{{ metrics.leads.trend }}%
+              </span>
+            </div>
+            <h3 class="stat-title">Leads Generated Today</h3>
+            <p class="stat-description">Digital marketing campaigns driving conversions</p>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="metrics.leads.progress"></div>
+            </div>
+            <div class="stat-meta">
+              <span class="meta-item">
+                <span class="meta-icon">🕒</span>
+                Updated {{ updateTime | date:'HH:mm:ss' }}
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">🎯</span>
+                {{ metrics.leads.target }} Target
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ads Card -->
+        <div class="stat-card" [class.active]="activeCard === 'ads'">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div class="card-badge" [class.pulse]="metrics.ads.isLive">
+              {{ metrics.ads.isLive ? 'LIVE' : 'PAUSED' }}
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="stat-value">
+              <span class="value-number">{{ metrics.ads.value | number:'1.0-0' }}</span>
+              <span class="value-trend" [class.positive]="metrics.ads.trend > 0">
+                {{ metrics.ads.trend > 0 ? '↗' : '↘' }}
+                {{ metrics.ads.trend > 0 ? '+' : '' }}{{ metrics.ads.trend }}%
+              </span>
+            </div>
+            <h3 class="stat-title">Ads Running Live</h3>
+            <p class="stat-description">Active campaigns across platforms</p>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="metrics.ads.progress"></div>
+            </div>
+            <div class="stat-meta">
+              <span class="meta-item">
+                <span class="meta-icon">📱</span>
+                {{ metrics.ads.platforms }} Platforms
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">💰</span>
+                ${{ metrics.ads.budget | number:'1.0-0' }} Budget
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Websites Card -->
+        <div class="stat-card" [class.active]="activeCard === 'websites'">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+              </svg>
+            </div>
+            <div class="card-badge" [class.pulse]="metrics.websites.isLive">
+              {{ metrics.websites.isLive ? 'ONLINE' : 'OFFLINE' }}
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="stat-value">
+              <span class="value-number">{{ metrics.websites.value | number:'1.0-0' }}</span>
+              <span class="value-trend" [class.positive]="metrics.websites.trend > 0">
+                {{ metrics.websites.trend > 0 ? '↗' : '↘' }}
+                {{ metrics.websites.trend > 0 ? '+' : '' }}{{ metrics.websites.trend }}%
+              </span>
+            </div>
+            <h3 class="stat-title">Websites Online</h3>
+            <p class="stat-description">Active websites we manage & maintain</p>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="metrics.websites.progress"></div>
+            </div>
+            <div class="stat-meta">
+              <span class="meta-item">
+                <span class="meta-icon">⚡</span>
+                {{ metrics.websites.uptime }}% Uptime
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">🛡️</span>
+                Secure
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Traffic Card -->
+        <div class="stat-card featured" [class.active]="activeCard === 'traffic'">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
+              </svg>
+            </div>
+            <div class="card-badge pulse">
+              LIVE TRACKING
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="stat-value">
+              <span class="value-number">{{ metrics.traffic.value | number:'1.0-0' }}</span>
+              <span class="value-trend positive">
+                ↗ +12%
+              </span>
+            </div>
+            <h3 class="stat-title">Traffic This Week</h3>
+            <p class="stat-description">Total visitors across all platforms</p>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="metrics.traffic.progress"></div>
+            </div>
+            <div class="stat-meta">
+              <span class="meta-item">
+                <span class="meta-icon">📈</span>
+                {{ metrics.traffic.growth }}% Growth
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">🌍</span>
+                {{ metrics.traffic.countries }} Countries
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Dashboard -->
+      <div class="dashboard-section">
+        <div class="dashboard-header">
+          <h2 class="dashboard-title">
+            <span class="live-indicator">
+              <span class="live-dot"></span>
+              LIVE DASHBOARD
+            </span>
+          </h2>
+          <div class="dashboard-controls">
+            <button class="control-btn" (click)="toggleAutoUpdate()" [class.active]="autoUpdate">
+              {{ autoUpdate ? '⏸️ PAUSE' : '▶️ RESUME' }}
+            </button>
+            <button class="control-btn" (click)="refreshData()">
+              🔄 REFRESH
+            </button>
+            <div class="time-display">
+              Last Updated: {{ updateTime | date:'MMM d, y, HH:mm:ss' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Performance Chart -->
+          <div class="dashboard-card">
+            <div class="dashboard-card-header">
+              <h3>Weekly Performance</h3>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot leads"></span> Leads</span>
+                <span class="legend-item"><span class="legend-dot traffic"></span> Traffic</span>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div class="chart-grid">
+                <div class="grid-line" *ngFor="let line of [0,1,2,3,4]"></div>
+              </div>
+              <div class="chart-bars">
+                <div class="chart-bar" *ngFor="let day of performanceChart; let i = index" [style.height.%]="day.leads * 0.8">
+                  <div class="bar-value">{{ day.leads }}</div>
+                  <div class="bar-label">{{ day.day }}</div>
+                </div>
+              </div>
+              <div class="chart-line">
+                <div class="line-point" *ngFor="let day of performanceChart; let i = index" 
+                     [style.left.%]="i * 16.66" [style.bottom.%]="day.traffic * 0.8"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Platform Distribution -->
+          <div class="dashboard-card">
+            <div class="dashboard-card-header">
+              <h3>Platform Distribution</h3>
+              <div class="total-platforms">{{ totalPlatforms }} Platforms</div>
+            </div>
+            <div class="platforms-grid">
+              <div class="platform-item" *ngFor="let platform of platforms">
+                <div class="platform-info">
+                  <span class="platform-icon">{{ platform.icon }}</span>
+                  <span class="platform-name">{{ platform.name }}</span>
+                </div>
+                <div class="platform-stats">
+                  <span class="platform-value">{{ platform.value }}</span>
+                  <span class="platform-trend" [class.positive]="platform.trend > 0">
+                    {{ platform.trend > 0 ? '+' : '' }}{{ platform.trend }}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-time Updates -->
+          <div class="dashboard-card">
+            <div class="dashboard-card-header">
+              <h3>Real-time Updates</h3>
+              <div class="update-count">{{ recentUpdates.length }} Updates</div>
+            </div>
+            <div class="updates-feed">
+              <div class="update-item" *ngFor="let update of recentUpdates">
+                <div class="update-time">{{ update.time | date:'HH:mm' }}</div>
+                <div class="update-content">
+                  <span class="update-icon">{{ update.icon }}</span>
+                  {{ update.message }}
+                </div>
+                <div class="update-source">{{ update.source }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="section-footer">
+        <p class="footer-text">
+          <strong>Helixson Global Private Limited</strong> • Digital Marketing & IT Solutions • Real-time Monitoring System
+        </p>
+        <p class="footer-note">
+          Data updates every 30 seconds • All metrics are live and tracked in real-time
+        </p>
+      </div>
+    </div>
+  </div>

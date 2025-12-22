@@ -1,0 +1,819 @@
+// live-impact.component.scss - Black Background with White Text
+@use 'sass:math';
+
+// Variables - Black Background with White Text
+$black: #000000;
+$dark-gray: #0a0a0a;
+$gray-90: #1a1a1a;
+$gray-80: #333333;
+$gray-70: #4d4d4d;
+$gray-60: #666666;
+$gray-50: #808080;
+$gray-40: #999999;
+$gray-30: #b3b3b3;
+$gray-20: #cccccc;
+$gray-10: #e6e6e6;
+$white: #ffffff;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin transition($property: all, $duration: 0.3s) {
+  transition: $property $duration cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Main Section - Black Background
+.live-impact-section {
+  min-height: 100vh;
+  background: $black;
+  color: $white;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+// Background Pattern - White on Black
+.background-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  
+  .pattern-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba($white, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba($white, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.2;
+  }
+  
+  .pattern-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba($white, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.15;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+// Header Section - White Text on Black
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba($white, 0.1);
+    border: 1px solid rgba($white, 0.2);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $white;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    
+    .badge-icon {
+      font-size: 1.25rem;
+      animation: pulse 2s infinite;
+      color: $white;
+    }
+  }
+  
+  .section-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: $white;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    
+    .highlight {
+      color: $white;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: rgba($white, 0.2);
+        z-index: -1;
+      }
+    }
+  }
+  
+  .section-subtitle {
+    font-size: 1.25rem;
+    color: $gray-30;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  
+  .header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 200px;
+    margin: 0 auto;
+    
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba($white, 0.3), transparent);
+    }
+    
+    .divider-dot {
+      width: 8px;
+      height: 8px;
+      background: $white;
+      border-radius: 50%;
+    }
+  }
+}
+
+// Stats Grid - Dark Cards with White Text
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+// Stat Card - Dark with White Accents
+.stat-card {
+  @include flex-column;
+  background: $gray-90;
+  border: 1px solid $gray-80;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  @include transition;
+  
+  &.active {
+    border-color: $white;
+    box-shadow: 0 20px 40px rgba($white, 0.1);
+    
+    .card-header {
+      .card-icon {
+        svg {
+          fill: $white;
+        }
+      }
+    }
+  }
+  
+  &.featured {
+    border: 2px solid $white;
+    background: $gray-80;
+    
+    .stat-title {
+      color: $white;
+      font-weight: 800;
+    }
+    
+    .card-badge {
+      background: $white;
+      color: $black;
+    }
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    border-color: $white;
+    box-shadow: 0 20px 40px rgba($white, 0.15);
+    background: lighten($gray-90, 5%);
+    
+    .card-header {
+      .card-icon {
+        transform: scale(1.1);
+        background: rgba($white, 0.2);
+        
+        svg {
+          fill: $white;
+        }
+      }
+    }
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      @include flex-center;
+      background: rgba($white, 0.1);
+      border-radius: 12px;
+      border: 1px solid rgba($white, 0.2);
+      @include transition;
+      
+      svg {
+        width: 24px;
+        height: 24px;
+        fill: $gray-30;
+        @include transition;
+      }
+    }
+    
+    .card-badge {
+      padding: 0.25rem 0.75rem;
+      background: rgba($white, 0.1);
+      border: 1px solid rgba($white, 0.2);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $gray-30;
+      
+      &.pulse {
+        background: $white;
+        color: $black;
+        animation: pulse 2s infinite;
+      }
+    }
+  }
+  
+  .card-content {
+    flex: 1;
+    
+    .stat-value {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      
+      .value-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: $white;
+        line-height: 1;
+        text-shadow: 0 2px 4px rgba($white, 0.1);
+      }
+      
+      .value-trend {
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.125rem 0.5rem;
+        border-radius: 50px;
+        background: rgba($white, 0.1);
+        color: $gray-30;
+        
+        &.positive {
+          background: rgba($white, 0.2);
+          color: $white;
+        }
+      }
+    }
+    
+    .stat-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-description {
+      color: $gray-30;
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background: $gray-80;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      
+      .progress-fill {
+        height: 100%;
+        background: $white;
+        border-radius: 3px;
+        @include transition(width, 1.5s);
+      }
+    }
+    
+    .stat-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        color: $gray-40;
+        
+        .meta-icon {
+          font-size: 0.875rem;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+// Dashboard Section - Black Background
+.dashboard-section {
+  margin-top: 4rem;
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    .dashboard-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $white;
+      
+      .live-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .live-dot {
+          width: 8px;
+          height: 8px;
+          background: $white;
+          border-radius: 50%;
+          animation: pulse 1s infinite;
+        }
+      }
+    }
+    
+    .dashboard-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      
+      .control-btn {
+        padding: 0.5rem 1rem;
+        background: $gray-90;
+        border: 1px solid $gray-80;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: $white;
+        cursor: pointer;
+        @include transition;
+        
+        &:hover {
+          border-color: $white;
+          background: rgba($white, 0.1);
+        }
+        
+        &.active {
+          background: $white;
+          color: $black;
+          border-color: $white;
+        }
+      }
+      
+      .time-display {
+        font-size: 0.875rem;
+        color: $gray-30;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+// Dashboard Grid
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+// Dashboard Card - Dark with White Text
+.dashboard-card {
+  background: $gray-90;
+  border: 1px solid $gray-80;
+  border-radius: 16px;
+  padding: 1.5rem;
+  @include transition;
+  
+  &:hover {
+    border-color: $white;
+    box-shadow: 0 8px 24px rgba($white, 0.1);
+  }
+  
+  .dashboard-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $white;
+      margin: 0;
+    }
+    
+    .chart-legend {
+      display: flex;
+      gap: 1rem;
+      
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        color: $gray-30;
+        
+        .legend-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          
+          &.leads {
+            background: $white;
+          }
+          
+          &.traffic {
+            background: $gray-30;
+          }
+        }
+      }
+    }
+    
+    .total-platforms,
+    .update-count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $white;
+      padding: 0.25rem 0.75rem;
+      background: rgba($white, 0.1);
+      border-radius: 50px;
+    }
+  }
+}
+
+// Chart Container - White on Black
+.chart-container {
+  position: relative;
+  height: 200px;
+  margin-bottom: 1rem;
+  
+  .chart-grid {
+    position: absolute;
+    inset: 0;
+    
+    .grid-line {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: $gray-80;
+      
+      &:nth-child(1) { top: 0%; }
+      &:nth-child(2) { top: 25%; }
+      &:nth-child(3) { top: 50%; }
+      &:nth-child(4) { top: 75%; }
+      &:nth-child(5) { top: 100%; }
+    }
+  }
+  
+  .chart-bars {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 1rem;
+    
+    .chart-bar {
+      width: 40px;
+      background: rgba($white, 0.2);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      @include transition;
+      
+      &:hover {
+        background: rgba($white, 0.3);
+        
+        .bar-value {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .bar-value {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $white;
+        opacity: 0;
+        @include transition;
+      }
+      
+      .bar-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        color: $gray-30;
+        white-space: nowrap;
+      }
+    }
+  }
+  
+  .chart-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80%;
+    
+    .line-point {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: $gray-30;
+      border-radius: 50%;
+      transform: translate(-50%, 50%);
+      border: 2px solid $black;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100vh;
+        background: $gray-70;
+        top: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+    }
+  }
+}
+
+// Platforms Grid - Dark with White Text
+.platforms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  .platform-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba($white, 0.05);
+    border-radius: 8px;
+    @include transition;
+    
+    &:hover {
+      background: rgba($white, 0.1);
+      transform: translateX(4px);
+      border: 1px solid rgba($white, 0.2);
+    }
+    
+    .platform-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      
+      .platform-icon {
+        font-size: 1.25rem;
+        color: $white;
+      }
+      
+      .platform-name {
+        font-weight: 600;
+        color: $white;
+      }
+    }
+    
+    .platform-stats {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      .platform-value {
+        font-size: 0.875rem;
+        color: $gray-30;
+      }
+      
+      .platform-trend {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.125rem 0.5rem;
+        border-radius: 50px;
+        background: rgba($white, 0.1);
+        color: $gray-30;
+        
+        &.positive {
+          background: rgba($white, 0.2);
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+// Updates Feed - Dark with White Text
+.updates-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  .update-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba($white, 0.05);
+    border-radius: 8px;
+    @include transition;
+    
+    &:hover {
+      background: rgba($white, 0.1);
+      border: 1px solid rgba($white, 0.2);
+    }
+    
+    .update-time {
+      font-size: 0.75rem;
+      color: $gray-30;
+      font-weight: 600;
+      min-width: 45px;
+    }
+    
+    .update-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: $white;
+      
+      .update-icon {
+        font-size: 1rem;
+        color: $white;
+      }
+    }
+    
+    .update-source {
+      font-size: 0.75rem;
+      color: $gray-30;
+      padding: 0.125rem 0.5rem;
+      background: rgba($white, 0.1);
+      border-radius: 50px;
+      font-weight: 600;
+    }
+  }
+}
+
+// Section Footer - White Text on Black
+.section-footer {
+  text-align: center;
+  padding-top: 3rem;
+  margin-top: 3rem;
+  border-top: 1px solid $gray-80;
+  
+  .footer-text {
+    font-size: 1rem;
+    color: $white;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .footer-note {
+    font-size: 0.875rem;
+    color: $gray-30;
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .container {
+    padding: 3rem 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 2.75rem !important;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 2.25rem !important;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem !important;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch !important;
+    
+    .dashboard-controls {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.875rem !important;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+    
+    .stat-value .value-number {
+      font-size: 2.5rem;
+    }
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Accessibility
+@media (prefers-contrast: high) {
+  .stat-card,
+  .dashboard-card {
+    border: 2px solid $white;
+  }
+  
+  .section-title,
+  .stat-title,
+  .dashboard-title {
+    color: $white !important;
+  }
+}

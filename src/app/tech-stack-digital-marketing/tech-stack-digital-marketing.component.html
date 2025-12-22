@@ -1,0 +1,89 @@
+<div class="stack-container">
+    <!-- Header Section -->
+    <div class="header">
+      <h1 class="title">
+        TECH + MARKETING <span class="gradient-text">STACK</span> SOLUTION
+      </h1>
+      <p class="subtitle">
+        A powerful combination of <span class="highlight">robust technology</span> and 
+        <span class="highlight">strategic marketing tools</span> to transform your digital 
+        presence and drive measurable results.
+      </p>
+    </div>
+  
+    <!-- Badges -->
+    <div class="badges-container">
+      <div class="badge mix-badge">
+        <i class="fas fa-code-branch"></i>
+        IT + Marketing Mix Crystal Clear
+      </div>
+      <div class="badge trust-badge">
+        <i class="fas fa-shield-alt"></i>
+        Trust ++
+      </div>
+    </div>
+  
+    <!-- Stacks Section -->
+    <div class="stacks-section">
+      <!-- Tech Stack -->
+      <div class="stack-card">
+        <div class="stack-header">
+          <div class="stack-icon tech-icon">
+            <i class="fas fa-server"></i>
+          </div>
+          <h2 class="stack-title">Tech Stack</h2>
+        </div>
+        <div class="stack-items">
+          <div class="stack-item tech-item" *ngFor="let tech of techStack">
+            <i [class]="getIconClass(tech.icon)"></i>
+            <span>{{ tech.name }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Marketing Stack -->
+      <div class="stack-card">
+        <div class="stack-header">
+          <div class="stack-icon marketing-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h2 class="stack-title">Marketing Stack</h2>
+        </div>
+        <div class="stack-items">
+          <div class="stack-item marketing-item" *ngFor="let marketing of marketingStack">
+            <i [class]="getIconClass(marketing.icon)"></i>
+            <span>{{ marketing.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Results Section -->
+    <div class="results-section">
+      <h2 class="section-title">TRANSFORMATION RESULTS</h2>
+  
+      <div class="results-container">
+        <!-- Before Column -->
+        <div class="result-column before-column">
+          <h3 class="column-title negative-title">BEFORE</h3>
+          <div class="result-item" *ngFor="let before of beforeResults">
+            <div class="result-icon" [class]="getResultClass(before.type)">
+              <i [class]="getIconClass(before.icon)"></i>
+            </div>
+            <div class="result-text">{{ before.text }}</div>
+          </div>
+        </div>
+  
+        <!-- After Column -->
+        <div class="result-column after-column">
+          <h3 class="column-title positive-title">AFTER</h3>
+          <div class="result-item" *ngFor="let after of afterResults">
+            <div class="result-icon" [class]="getResultClass(after.type)">
+              <i [class]="getIconClass(after.icon)"></i>
+            </div>
+            <div class="result-text">{{ after.text }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

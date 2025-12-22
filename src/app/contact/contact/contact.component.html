@@ -1,218 +1,207 @@
-<div class="contact-page">
-    <!-- Animated Background -->
-    <div class="background-animation">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-      <div class="grid-lines"></div>
-    </div>
-  
-    <!-- Main Content -->
-    <div class="container">
-      <!-- Header Section -->
-      <header class="header animate-on-scroll">
-        <div class="logo-container">
-          <div class="logo">H</div>
-          <div class="company-name">
-            <h1 class="gradient-text">Helixson Global</h1>
-            <p class="tagline">Private Limited</p>
+    <!-- Main Container -->
+    <div class="contact-container">
+      <section class="hero-section">
+        <div class="hero-content">
+          <h2 class="hero-title">Connect With Us</h2>
+          <p class="hero-subtitle">
+            Let's discuss how Helixson Global can transform your digital presence and IT infrastructure
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact Content -->
+      <div class="contact-content">
+        <!-- Left Column - Contact Information -->
+        <div class="contact-info-section">
+          <div class="info-card">
+            <div class="info-header">
+              <div class="info-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <h3>Our Location</h3>
+            </div>
+            <div class="info-details">
+              <p><strong>Headquarters</strong></p>
+              <p>123 Tech Park Avenue</p>
+              <p>Gurugram, Haryana 122002</p>
+              <p>India</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-header">
+              <div class="info-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <h3>Contact Details</h3>
+            </div>
+            <div class="info-details">
+              <p><i class="fas fa-phone-alt icon-small"></i> +91 98765 43210</p>
+              <p><i class="fas fa-envelope icon-small"></i> contacthelixsonglobal.com</p>
+              <p><i class="fas fa-globe icon-small"></i> www.helixsonglobal.com</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-header">
+              <div class="info-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h3>Business Hours</h3>
+            </div>
+            <div class="info-details">
+              <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</p>
+              <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+              <p><strong>Sunday:</strong> Closed</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-header">
+              <div class="info-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <h3>Our Services</h3>
+            </div>
+            <div class="info-details">
+              <ul class="services-list">
+                <li>Digital Marketing Strategy</li>
+                <li>Web & Mobile Development</li>
+                <li>Cloud Solutions</li>
+                <li>Data Analytics</li>
+                <li>IT Consulting</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <p class="subtitle">Digital Marketing Excellence</p>
-      </header>
-  
-      <!-- Success Message -->
-      <div class="success-message" [class.show]="showSuccess">
-        <span class="success-icon">✓</span>
-        <p>Thank you! We'll get back to you soon.</p>
-      </div>
-  
-      <!-- Contact Info Cards -->
-      <div class="contact-info-grid">
-        <div class="info-card animate-on-scroll" *ngFor="let info of contactInfo; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
-          <div class="info-icon">{{ info.icon }}</div>
-          <h3>{{ info.title }}</h3>
-          <a [href]="info.link" target="_blank">{{ info.content }}</a>
-        </div>
-      </div>
-  
-      <!-- Main Contact Section -->
-      <div class="contact-grid">
-        <!-- Contact Form -->
-        <div class="form-container animate-on-scroll">
-          <h2>Get In Touch</h2>
-          <p class="form-subtitle">Let's discuss how we can elevate your digital presence</p>
-          
-          <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
-            <div class="form-row">
+
+        <!-- Right Column - Contact Form -->
+        <div class="contact-form-section">
+          <div class="form-container">
+            <h2 class="form-title">Send us a Message</h2>
+            <p class="form-subtitle">We'll respond within 24 hours</p>
+
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
                 <label for="name">Full Name *</label>
                 <input 
                   type="text" 
                   id="name" 
-                  name="name"
-                  [(ngModel)]="formData.name"
-                  [class.error]="hasError('name')"
-                  placeholder="John Doe"
-                  required
-                />
-                <span class="error-message" *ngIf="hasError('name')">{{ getError('name') }}</span>
+                  formControlName="name"
+                  placeholder="Enter your full name"
+                  [class.invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                  Name is required
+                </div>
               </div>
-  
+
               <div class="form-group">
                 <label for="email">Email Address *</label>
                 <input 
                   type="email" 
                   id="email" 
-                  name="email"
-                  [(ngModel)]="formData.email"
-                  [class.error]="hasError('email')"
-                  placeholder="john@example.com"
-                  required
-                />
-                <span class="error-message" *ngIf="hasError('email')">{{ getError('email') }}</span>
+                  formControlName="email"
+                  placeholder="Enter your email address"
+                  [class.invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                  Valid email is required
+                </div>
               </div>
-            </div>
-  
-            <div class="form-row">
-              <div class="form-group">
-                <label for="phone">Phone Number *</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  name="phone"
-                  [(ngModel)]="formData.phone"
-                  [class.error]="hasError('phone')"
-                  placeholder="+1 (555) 123-4567"
-                  required
-                />
-                <span class="error-message" *ngIf="hasError('phone')">{{ getError('phone') }}</span>
-              </div>
-  
+
               <div class="form-group">
                 <label for="company">Company Name</label>
                 <input 
                   type="text" 
                   id="company" 
-                  name="company"
-                  [(ngModel)]="formData.company"
-                  placeholder="Your Company"
-                />
+                  formControlName="company"
+                  placeholder="Enter your company name">
               </div>
-            </div>
-  
-            <div class="form-group">
-              <label for="service">Service Interested In</label>
-              <select 
-                id="service" 
-                name="service"
-                [(ngModel)]="formData.service"
-              >
-                <option *ngFor="let service of services" [value]="service">{{ service }}</option>
-              </select>
-            </div>
-  
-            <div class="form-group">
-              <label for="message">Your Message *</label>
-              <textarea 
-                id="message" 
-                name="message"
-                [(ngModel)]="formData.message"
-                [class.error]="hasError('message')"
-                rows="5"
-                placeholder="Tell us about your project..."
-                required
-              ></textarea>
-              <span class="error-message" *ngIf="hasError('message')">{{ getError('message') }}</span>
-            </div>
-  
-            <button 
-              type="submit" 
-              class="submit-btn" 
-              [class.loading]="isSubmitting"
-              [disabled]="isSubmitting"
-            >
-              <span *ngIf="!isSubmitting">Send Message</span>
-              <span *ngIf="isSubmitting" class="spinner"></span>
-            </button>
-          </form>
-        </div>
-  
-        <!-- Side Info -->
-        <div class="side-info animate-on-scroll">
-          <div class="info-section">
-            <h3>Why Choose Us?</h3>
-            <ul class="features-list">
-              <li>
-                <span class="feature-icon">🚀</span>
-                <div>
-                  <strong>Data-Driven Strategies</strong>
-                  <p>ROI-focused campaigns backed by analytics</p>
-                </div>
-              </li>
-              <li>
-                <span class="feature-icon">💡</span>
-                <div>
-                  <strong>Creative Excellence</strong>
-                  <p>Award-winning creative team</p>
-                </div>
-              </li>
-              <li>
-                <span class="feature-icon">📈</span>
-                <div>
-                  <strong>Proven Results</strong>
-                  <p>150+ successful campaigns delivered</p>
-                </div>
-              </li>
-              <li>
-                <span class="feature-icon">🤝</span>
-                <div>
-                  <strong>24/7 Support</strong>
-                  <p>Dedicated account management</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-  
-          <div class="info-section social-section">
-            <h3>Connect With Us</h3>
-            <div class="social-links">
-              <a 
-                *ngFor="let social of socialLinks" 
-                [href]="social.url" 
-                class="social-link"
-                [attr.aria-label]="social.name"
-              >
-                <span>{{ social.icon }}</span>
-              </a>
-            </div>
-          </div>
-  
-          <div class="info-section hours-section">
-            <h3>Business Hours</h3>
-            <div class="hours">
-              <div class="hour-item">
-                <span>Monday - Friday</span>
-                <span>9:00 AM - 6:00 PM</span>
+
+              <div class="form-group">
+                <label for="service">Service Interested In</label>
+                <select id="service" formControlName="service">
+                  <option value="">Select a service</option>
+                  <option value="digital-marketing">Digital Marketing</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="mobile-apps">Mobile Applications</option>
+                  <option value="cloud-solutions">Cloud Solutions</option>
+                  <option value="data-analytics">Data Analytics</option>
+                </select>
               </div>
-              <div class="hour-item">
-                <span>Saturday</span>
-                <span>10:00 AM - 4:00 PM</span>
+
+              <div class="form-group">
+                <label for="message">Your Message *</label>
+                <textarea 
+                  id="message" 
+                  formControlName="message"
+                  rows="5"
+                  placeholder="Tell us about your project or inquiry"
+                  [class.invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
+                <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+                  Message is required
+                </div>
               </div>
-              <div class="hour-item">
-                <span>Sunday</span>
-                <span>Closed</span>
+
+              <button 
+                type="submit" 
+                class="submit-btn"
+                [disabled]="contactForm.invalid || submitting">
+                <span *ngIf="!submitting">
+                  <i class="fas fa-paper-plane"></i> Send Message
+                </span>
+                <span *ngIf="submitting">
+                  <i class="fas fa-spinner fa-spin"></i> Sending...
+                </span>
+              </button>
+
+              <div class="form-message" *ngIf="submitSuccess">
+                <div class="success-message">
+                  <i class="fas fa-check-circle"></i>
+                  Thank you! Your message has been sent successfully.
+                </div>
               </div>
-            </div>
+
+              <div class="form-message" *ngIf="submitError">
+                <div class="error-message">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  There was an error sending your message. Please try again.
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-  
+
       <!-- Footer -->
-      <footer class="footer animate-on-scroll">
-        <p>&copy; 2025 Helixson Global Private Limited. All rights reserved.</p>
-        <p class="footer-tagline">Transforming Brands Through Digital Innovation</p>
+      <footer class="contact-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Helixson Global Pvt. Ltd.</h3>
+            <p>Transforming businesses through innovative digital solutions</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Portfolio</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Global Offices</h3>
+            <p>India • USA • UK • UAE • Singapore</p>
+            <p class="copyright">© 2023 Helixson Global Private Limited. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
-  </div>
-  
