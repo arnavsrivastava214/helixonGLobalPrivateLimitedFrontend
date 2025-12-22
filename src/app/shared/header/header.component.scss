@@ -536,6 +536,9 @@
     font-size: 1rem;
   }
 }
+@media screen {
+  
+}
 
 @keyframes pulse {
   0%, 100% {
@@ -543,5 +546,19 @@
   }
   50% {
     filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .logo{
+    gap: 0 ;
+
+  }
+  .img{
+    width: 80px !important;
+
+  }
+  .logo-text{
+    font-size: 15px !important;
   }
 }
